@@ -130,7 +130,7 @@ walk-away reads as "anything goes".
 
 ## Related projects
 
-[citecheck](../citecheck), [oblig-register](../oblig-register), [sg-deadline](../sg-deadline).
+[citecheck](https://github.com/kevanwee/citecheck), [oblig-register](https://github.com/kevanwee/oblig-register), [sg-deadline](https://github.com/kevanwee/sg-deadline).
 
 ## License
 
