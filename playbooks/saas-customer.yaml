@@ -1,0 +1,134 @@
+# SaaS subscription agreement, CUSTOMER side, Singapore law.
+# Mirror of saas-vendor.yaml so the two can be diffed to see where deals actually land.
+
+name: SaaS Subscription (Customer)
+version: "1"
+side: customer
+contract_type: SaaS subscription / master services agreement
+jurisdiction: SG
+owner: Legal
+updated: 2026-09-12
+summary: >
+  Positions for an enterprise buying SaaS. Procurement may sign at "acceptable"; anything
+  below goes to the named approver.
+
+positions:
+  - id: liability-cap
+    topic: Limitation of liability
+    severity: deal_breaker
+    ideal: >
+      Vendor liability capped at the greater of 24 months' fees or SGD 1m; uncapped for
+      breach of confidentiality, data protection, IP indemnity, wilful default and gross
+      negligence. Our liability capped at fees payable.
+    acceptable: >
+      Cap at 12 months' fees with a super-cap of 3x fees for data protection and
+      confidentiality; uncapped IP indemnity.
+    walk_away: Cap below 12 months' fees, or data-protection breach inside the general cap.
+    detect:
+      any_of: ["aggregate liability", "total liability", "shall not exceed", "limitation of liability"]
+      headings: ["Limitation of Liability", "Liability"]
+    authority: General Counsel
+    jurisdiction_notes:
+      SG: >
+        If the vendor is on its own standard terms, UCTA s 3 applies and an unreasonably low
+        cap may be unenforceable; that is a litigation argument, not a negotiating comfort.
+
+  - id: data-protection
+    topic: Personal data and PDPA
+    severity: deal_breaker
+    ideal: >
+      Vendor is data intermediary and processes only on our documented instructions;
+      breach notification within 24 hours of becoming aware; prior written consent to
+      sub-processors; data hosted in Singapore; deletion certificate within 30 days of
+      termination; annual audit right.
+    acceptable: >
+      Notification within 48 hours of confirmation; sub-processor list with 30-day objection
+      right and termination right if objection unresolved; hosting in Singapore or a
+      jurisdiction with comparable protection; SOC 2 Type II in lieu of audit.
+    walk_away: >
+      Notification longer than 72 hours; no sub-processor transparency; no deletion
+      obligation; data-protection liability inside the general cap.
+    detect:
+      any_of: ["personal data", "PDPA", "data protection", "data intermediary", "sub-processor", "subprocessor"]
+    authority: DPO + General Counsel
+    jurisdiction_notes:
+      SG: >
+        We remain the organisation with Transfer Limitation (s 26) and Accountability
+        obligations; the contract must give us what we need to satisfy the PDPC, including
+        comparable-protection assurances for offshore hosting.
+
+  - id: service-levels
+    topic: Service levels, credits and termination for chronic failure
+    severity: high
+    ideal: 99.95% uptime; credits up to 50% of monthly fee; credits are NOT the sole remedy; termination right after 2 SLA misses in any 6 months, with refund of prepaid fees.
+    acceptable: 99.9%; credits up to 25%; termination right after 3 consecutive misses; credits sole remedy only for the SLA miss itself, not for consequential breaches.
+    walk_away: No SLA, or credits capped below 10% with sole-remedy language and no termination right.
+    detect:
+      any_of: ["service level", "uptime", "service credit", "availability"]
+    authority: CIO
+
+  - id: termination-convenience
+    topic: Termination for convenience
+    severity: medium
+    ideal: We may terminate for convenience on 30 days' notice with pro-rata refund.
+    acceptable: 90 days' notice, no refund, no early-termination fee.
+    walk_away: Locked in for a multi-year term with no exit and an early-termination fee equal to all remaining fees.
+    detect:
+      any_of: ["for convenience", "without cause", "terminate this agreement at any time"]
+    authority: CFO
+
+  - id: exit-and-data-return
+    topic: Exit assistance and data return
+    severity: high
+    ideal: 90-day post-termination access; export in a documented, non-proprietary format at no cost; deletion certificate.
+    acceptable: 30-day access; export at cost; deletion within 60 days.
+    walk_away: No data-return obligation, or proprietary-format only.
+    detect:
+      any_of: ["transition", "exit assistance", "return of data", "data export", "deletion", "delete"]
+    fallback_language: |
+      For a period of ninety (90) days following termination or expiry, the Supplier shall
+      make the Customer Data available for retrieval in a commonly used, machine-readable
+      format at no additional charge, and shall thereafter securely delete all Customer
+      Data and certify such deletion in writing.
+    authority: CIO
+
+  - id: price-increases
+    topic: Renewal pricing
+    severity: medium
+    ideal: Fees fixed for the initial term and any renewal; any increase requires a new agreement.
+    acceptable: Increase at renewal capped at the lower of 3% or CPI, with 90 days' notice.
+    walk_away: Uncapped increases or increases mid-term.
+    detect:
+      any_of: ["renew", "renewal", "increase", "price adjustment", "CPI"]
+    authority: CFO
+
+  - id: ip-indemnity
+    topic: IP infringement indemnity
+    severity: high
+    ideal: Uncapped, worldwide, covering the Service as used per documentation; vendor conducts defence; we may participate.
+    acceptable: Capped at 3x fees; sole-remedy language accepted if refund of all prepaid fees is included.
+    walk_away: No indemnity.
+    detect:
+      any_of: ["infring", "indemnif"]
+      all_of: ["intellectual property"]
+    authority: General Counsel
+
+  - id: governing-law
+    topic: Governing law and dispute resolution
+    severity: medium
+    ideal: Singapore law; Singapore courts.
+    acceptable: Singapore law; SIAC arbitration seated in Singapore.
+    walk_away: Foreign law and foreign courts with no carve-out for injunctive relief in Singapore.
+    detect:
+      any_of: ["governed by", "governing law", "arbitration", "SIAC", "exclusive jurisdiction"]
+    authority: Head of Legal
+
+  - id: subcontracting
+    topic: Subcontracting
+    severity: low
+    ideal: No subcontracting without consent; vendor remains liable for subcontractors.
+    acceptable: Subcontracting permitted with notice; vendor remains fully liable.
+    walk_away: Vendor disclaims liability for subcontractors.
+    detect:
+      any_of: ["subcontract", "sub-contract"]
+    authority: Procurement lead

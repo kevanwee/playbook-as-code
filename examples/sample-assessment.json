@@ -1,0 +1,89 @@
+{
+  "contract": "sample-msa.md",
+  "playbook": "saas-vendor.yaml",
+  "assessments": [
+    {
+      "position_id": "liability-cap",
+      "verdict": "WALK_AWAY",
+      "clause_ref": "7.2",
+      "evidence": "shall not exceed the Fees paid in the three (3) months preceding the event giving rise to the claim ... shall not apply to any breach of clause 5 (Data Protection) or clause 6 (Intellectual Property)",
+      "reasoning": "Cap is one-sided (Supplier only), 3 months, and clause 7.3 removes the cap entirely for data protection and IP. Two independent walk-away triggers.",
+      "find": "the Supplier's total aggregate liability arising out of or in connection with this Agreement shall not exceed the Fees paid in the three (3) months preceding the event giving rise to the claim",
+      "replace": "each party's total aggregate liability arising out of or in connection with this Agreement, whether in contract, tort (including negligence), breach of statutory duty or otherwise, shall not exceed the Fees paid or payable in the twelve (12) months immediately preceding the event giving rise to the claim",
+      "comment": "We propose a mutual cap at 12 months' fees, with data protection subject to a super-cap of 2x fees rather than uncapped."
+    },
+    {
+      "position_id": "consequential-loss",
+      "verdict": "BELOW",
+      "clause_ref": "7.4",
+      "evidence": "The Supplier shall not be liable for any indirect or consequential loss.",
+      "reasoning": "One-sided in our favour, which the customer will push back on; and it omits loss of profit, which may be a direct loss under Hadley v Baxendale.",
+      "find": "The Supplier shall not be liable for any indirect or consequential loss.",
+      "comment": "Made mutual and extended to loss of profit, revenue and goodwill, whether direct or indirect."
+    },
+    {
+      "position_id": "ip-indemnity",
+      "verdict": "WALK_AWAY",
+      "clause_ref": "6.1",
+      "evidence": "indemnify the Customer against all losses arising from any claim that the Service infringes any third party's intellectual property rights anywhere in the world",
+      "reasoning": "Worldwide, uncapped (via 7.3), no exclusions, no sole-remedy language.",
+      "comment": "Indemnity limited to unmodified Service, with standard exclusions and procure/modify/refund as sole remedy, within a 2x super-cap."
+    },
+    {
+      "position_id": "data-protection",
+      "verdict": "WALK_AWAY",
+      "clause_ref": "5.1",
+      "evidence": "notify the Customer immediately upon becoming aware of any actual or suspected unauthorised access",
+      "reasoning": "'Immediately' and 'suspected' are both walk-away triggers; 5.2 bans sub-processors without consent, which our architecture cannot satisfy.",
+      "comment": "Notification within 48 hours of confirmation; sub-processor list with 30-day objection right."
+    },
+    {
+      "position_id": "sla-sole-remedy",
+      "verdict": "ACCEPTABLE",
+      "clause_ref": "4.2",
+      "evidence": "The Customer's sole and exclusive remedy for any failure to meet the service level shall be the Service Credits in Schedule 2."
+    },
+    {
+      "position_id": "termination-convenience",
+      "verdict": "WALK_AWAY",
+      "clause_ref": "8.2",
+      "evidence": "terminate this Agreement for convenience at any time on thirty (30) days' written notice without liability for any remaining Fees",
+      "reasoning": "30 days, no fee, inside a 36-month committed term.",
+      "comment": "90 days' notice with payment of the remaining Fees for the then-current term."
+    },
+    {
+      "position_id": "payment-terms",
+      "verdict": "BELOW",
+      "clause_ref": "3.1",
+      "evidence": "payable within sixty (60) days of receipt",
+      "reasoning": "Net 60 is below acceptable (net 45); no suspension right for arrears."
+    },
+    {
+      "position_id": "governing-law",
+      "verdict": "WALK_AWAY",
+      "clause_ref": "9.2",
+      "evidence": "governed by the laws of the State of Delaware and the parties submit to the exclusive jurisdiction of the courts of Delaware",
+      "reasoning": "We have no Delaware advice.",
+      "find": "This Agreement is governed by the laws of the State of Delaware and the parties submit to the exclusive jurisdiction of the courts of Delaware.",
+      "comment": "Singapore law and SIAC arbitration seated in Singapore."
+    },
+    {
+      "position_id": "auto-renewal",
+      "verdict": "MISSING",
+      "evidence": "silent",
+      "reasoning": "No renewal mechanism; the deal assumes renewal revenue."
+    },
+    {
+      "position_id": "non-solicit",
+      "verdict": "MISSING",
+      "evidence": "silent"
+    },
+    {
+      "position_id": "assignment",
+      "verdict": "BELOW",
+      "clause_ref": "9.1",
+      "evidence": "Neither party may assign this Agreement without the other's prior written consent.",
+      "reasoning": "No affiliate / change-of-control carve-out for us."
+    }
+  ]
+}

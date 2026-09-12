@@ -1,0 +1,192 @@
+# SaaS subscription agreement, VENDOR side, Singapore law.
+# Positions are ordered roughly by how often they decide whether a deal closes.
+
+name: SaaS Subscription (Vendor)
+version: "1"
+side: vendor
+contract_type: SaaS subscription / master services agreement
+jurisdiction: SG
+owner: Legal
+updated: 2026-09-12
+summary: >
+  Standard positions for a Singapore SaaS vendor selling to enterprise customers. The
+  commercial team may close at "acceptable" without Legal; anything below needs the named
+  approver.
+
+positions:
+  - id: liability-cap
+    topic: Limitation of liability
+    severity: deal_breaker
+    ideal: >
+      Aggregate liability capped at fees paid in the 12 months before the claim. Exclusions
+      apply only to what cannot lawfully be excluded.
+    acceptable: >
+      Cap at 12 months' fees, with carve-outs limited to (a) breach of confidentiality,
+      (b) our IP indemnity, and (c) the customer's payment obligations. A super-cap of up to
+      2x fees for data-protection breach is acceptable.
+    walk_away: >
+      Uncapped liability, a cap below 6 months' fees on our side only, or a carve-out for
+      "gross negligence" or "breach of data protection obligations" without a super-cap.
+    detect:
+      any_of: ["aggregate liability", "total liability", "shall not exceed", "liability cap", "limitation of liability"]
+      headings: ["Limitation of Liability", "Liability"]
+    fallback_language: |
+      Subject to clause [X] (Exclusions), each party's total aggregate liability arising out
+      of or in connection with this Agreement, whether in contract, tort (including
+      negligence), breach of statutory duty or otherwise, shall not exceed the Fees paid or
+      payable by the Customer in the twelve (12) months immediately preceding the event
+      giving rise to the claim.
+    authority: General Counsel
+    rationale: The single biggest determinant of our downside on any deal.
+    jurisdiction_notes:
+      SG: >
+        UCTA 1977 s 11 reasonableness applies to B2B exclusions of negligence liability and
+        to standard-form terms (s 3). A cap set unreasonably low against a standard-form
+        customer risks being struck down entirely, which is worse than a higher cap.
+
+  - id: consequential-loss
+    topic: Exclusion of indirect and consequential loss
+    severity: high
+    ideal: >
+      Mutual exclusion of indirect, consequential, special and punitive damages, and of loss
+      of profit, revenue, data, goodwill and anticipated savings "whether direct or indirect".
+    acceptable: >
+      Mutual exclusion of indirect and consequential loss and loss of profit; loss of data
+      may be carved back in for us if we have a backup obligation and it is inside the cap.
+    walk_away: One-sided exclusion that protects only the customer.
+    detect:
+      any_of: ["consequential", "indirect loss", "loss of profit", "loss of profits", "special damages", "punitive"]
+    fallback_language: |
+      Neither party shall be liable to the other for any indirect or consequential loss, or
+      for any loss of profit, revenue, business, goodwill or anticipated savings, in each case
+      whether direct or indirect and however arising.
+    authority: Head of Legal
+    jurisdiction_notes:
+      SG: >
+        Singapore courts follow the Hadley v Baxendale limbs; "loss of profit" can be a
+        direct loss, so it must be listed expressly to be excluded.
+
+  - id: ip-indemnity
+    topic: IP infringement indemnity
+    severity: high
+    ideal: >
+      We indemnify for third-party claims that the unmodified Service infringes IP in
+      Singapore; remedies are procure-licence / modify / refund of prepaid unused fees, at
+      our option, as the customer's sole remedy; exclusions for customer data, modifications,
+      combinations and use after notice.
+    acceptable: >
+      Worldwide scope is acceptable if the indemnity is within the super-cap or capped at
+      2x fees. Sole-remedy language must survive.
+    walk_away: Uncapped IP indemnity with no exclusions and no sole-remedy language.
+    detect:
+      any_of: ["infring", "indemnif"]
+      all_of: ["intellectual property"]
+    authority: General Counsel
+    rationale: Uncapped IP exposure is uninsurable at our size.
+
+  - id: data-protection
+    topic: Personal data and PDPA
+    severity: high
+    ideal: >
+      We act as data intermediary; obligations limited to PDPA Part 6 protection and
+      retention as it applies to intermediaries; sub-processors permitted with notice;
+      breach notification within 72 hours of confirmation.
+    acceptable: >
+      Notification within 48 hours of confirmation; a named sub-processor list with a
+      30-day objection right; customer audit right once per year on reasonable notice, at
+      customer's cost, or a SOC 2 report in lieu.
+    walk_away: >
+      Notification "immediately" or within 24 hours of any suspected incident; unlimited
+      on-site audit rights; prohibition on any sub-processors; liability for data breach
+      outside the cap and super-cap.
+    detect:
+      any_of: ["personal data", "PDPA", "data protection", "data intermediary", "sub-processor", "subprocessor"]
+    authority: Data Protection Officer + Head of Legal
+    jurisdiction_notes:
+      SG: >
+        PDPA s 4(2): a data intermediary processing under a written contract is subject only
+        to the Protection (s 24) and Retention (s 25) obligations. Keep the contract framing
+        us as intermediary. Mandatory breach notification to PDPC is 3 calendar days from
+        assessment (s 26D); do not promise the customer shorter than we can meet.
+
+  - id: sla-sole-remedy
+    topic: Service levels and service credits
+    severity: medium
+    ideal: 99.5% monthly uptime; credits capped at 10% of monthly fees; credits are sole and exclusive remedy for SLA failure.
+    acceptable: 99.9% uptime; credits capped at 25% of monthly fee; sole remedy retained; termination right only after 3 consecutive months below SLA.
+    walk_away: Credits not the sole remedy, or uncapped credits, or termination right on a single SLA miss.
+    detect:
+      any_of: ["service level", "uptime", "service credit", "availability"]
+    fallback_language: |
+      The Service Credits set out in Schedule [X] are the Customer's sole and exclusive
+      remedy for any failure by the Supplier to meet the Service Levels.
+    authority: VP Operations
+
+  - id: termination-convenience
+    topic: Termination for convenience
+    severity: high
+    ideal: No termination for convenience by the customer during the initial term.
+    acceptable: Customer may terminate for convenience on 90 days' notice with payment of the remaining fees for the current term.
+    walk_away: Termination for convenience on 30 days' notice with no early-termination fee during a multi-year committed term.
+    detect:
+      any_of: ["for convenience", "without cause", "terminate this agreement at any time"]
+    authority: CFO
+
+  - id: auto-renewal
+    topic: Renewal
+    severity: low
+    ideal: Automatic renewal for successive 12-month terms unless 60 days' notice; fees may increase by up to 5% or CPI per renewal.
+    acceptable: 30 days' notice of non-renewal; increase capped at 5%.
+    walk_away: No renewal mechanism at all in a deal whose economics depend on renewal.
+    detect:
+      any_of: ["renew", "renewal"]
+    authority: Commercial lead
+
+  - id: payment-terms
+    topic: Fees and payment
+    severity: medium
+    ideal: Annual fees invoiced in advance, net 30, late interest at 1.5% per month, suspension right after 30 days' arrears.
+    acceptable: Net 45; interest at the rate under the Supreme Court of Judicature Act default judgment rate; suspension after 60 days with 10 days' notice.
+    walk_away: Payment in arrears, net 90+, or no suspension right.
+    detect:
+      any_of: ["invoice", "payment terms", "net 30", "net 45", "net 60", "late payment", "interest on"]
+    authority: CFO
+
+  - id: governing-law
+    topic: Governing law and dispute resolution
+    severity: medium
+    ideal: Singapore law; SIAC arbitration seated in Singapore; English language.
+    acceptable: Singapore law with exclusive jurisdiction of the Singapore courts (including SICC).
+    walk_away: Governing law of a jurisdiction we have no advice on, with courts there.
+    detect:
+      any_of: ["governed by", "governing law", "arbitration", "SIAC", "exclusive jurisdiction"]
+    fallback_language: |
+      This Agreement and any dispute or claim arising out of or in connection with it shall
+      be governed by the laws of Singapore. Any dispute shall be referred to and finally
+      resolved by arbitration administered by the Singapore International Arbitration
+      Centre in accordance with the Arbitration Rules of the SIAC for the time being in
+      force. The seat of the arbitration shall be Singapore. The tribunal shall consist of
+      one arbitrator. The language of the arbitration shall be English.
+    authority: Head of Legal
+
+  - id: non-solicit
+    topic: Non-solicitation of staff
+    severity: low
+    ideal: Mutual, 12 months post-termination, excludes general advertisements.
+    acceptable: Mutual, 6 months.
+    walk_away: One-sided against us with liquidated damages.
+    detect:
+      any_of: ["solicit", "non-solicitation"]
+    authority: Head of Legal
+    jurisdiction_notes:
+      SG: Restraints are enforceable only if reasonable and protecting a legitimate interest; keep scope narrow to keep it enforceable.
+
+  - id: assignment
+    topic: Assignment and change of control
+    severity: medium
+    ideal: We may assign to an affiliate or on a sale of the business without consent; customer may not assign without our consent.
+    acceptable: Mutual consent not to be unreasonably withheld; free assignment on change of control for both.
+    walk_away: Customer termination right on our change of control.
+    detect:
+      any_of: ["assign", "change of control"]
+    authority: General Counsel

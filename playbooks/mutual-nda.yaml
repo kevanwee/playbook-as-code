@@ -1,0 +1,108 @@
+# Mutual non-disclosure agreement, Singapore law.
+
+name: Mutual NDA
+version: "1"
+side: mutual
+contract_type: Mutual non-disclosure agreement
+jurisdiction: SG
+owner: Legal
+updated: 2026-09-12
+summary: >
+  Positions for a mutual NDA ahead of a commercial discussion. NDAs should close in one
+  round; anything requiring the approver here should prompt "do we need an NDA with this
+  counterparty at all?"
+
+positions:
+  - id: definition
+    topic: Definition of Confidential Information
+    severity: high
+    ideal: >
+      All non-public information disclosed in connection with the Purpose, in any form,
+      whether or not marked; includes the existence and terms of discussions.
+    acceptable: Marked or identified as confidential at disclosure, with 30 days to confirm oral disclosures in writing.
+    walk_away: Only information marked "CONFIDENTIAL" in writing counts, with no cure for oral disclosures.
+    detect:
+      any_of: ["confidential information", "means all", "marked"]
+      headings: ["Definitions", "Confidential Information"]
+    authority: Head of Legal
+
+  - id: exclusions
+    topic: Standard exclusions
+    severity: medium
+    ideal: Public domain (not by breach), already known, independently developed, received from a third party without restriction. Burden on recipient with written records.
+    acceptable: Same four exclusions without the written-records requirement.
+    walk_away: An exclusion for information "generally known in the industry" without the public-domain qualifier, or no exclusions at all.
+    detect:
+      any_of: ["public domain", "independently developed", "already known", "publicly available"]
+    authority: Head of Legal
+
+  - id: purpose-limitation
+    topic: Use restricted to the Purpose
+    severity: high
+    ideal: Use solely for the defined Purpose; disclosure only to Representatives with a need to know who are bound by equivalent obligations; discloser liable for its Representatives.
+    acceptable: Representatives include affiliates and professional advisers.
+    walk_away: No purpose limitation, or disclosure to any "affiliate" without need-to-know.
+    detect:
+      any_of: ["solely for", "the Purpose", "need to know", "Representatives"]
+    authority: Head of Legal
+
+  - id: term-survival
+    topic: Term and survival
+    severity: medium
+    ideal: Agreement runs 2 years; obligations survive 5 years from disclosure; trade secrets survive indefinitely.
+    acceptable: Obligations survive 3 years from termination.
+    walk_away: Obligations end when the agreement ends, or perpetual obligations for everything.
+    detect:
+      any_of: ["survive", "survival", "term of this agreement", "shall continue"]
+    authority: Head of Legal
+
+  - id: residuals
+    topic: Residuals clause
+    severity: deal_breaker
+    ideal: No residuals clause.
+    acceptable: Residuals limited to general skills and know-how retained in unaided memory, expressly excluding any licence to IP and any information intentionally memorised.
+    walk_away: Broad residuals clause permitting use of anything retained in memory.
+    detect:
+      any_of: ["residual", "unaided memory", "retained in the memory"]
+    authority: General Counsel
+    rationale: A residuals clause converts an NDA into a free licence for the counterparty's engineers.
+
+  - id: return-destroy
+    topic: Return or destruction
+    severity: low
+    ideal: Return or destroy on request or termination; certify in writing; exception for one archival copy under legal-hold and automatic backups.
+    acceptable: Destruction only (no return); backup exception.
+    walk_away: No obligation to return or destroy.
+    detect:
+      any_of: ["return", "destroy", "destruction", "archival"]
+    authority: Legal counsel
+
+  - id: no-licence
+    topic: No licence or obligation to proceed
+    severity: medium
+    ideal: No licence granted; no obligation to enter any further agreement; no warranty as to accuracy.
+    acceptable: Same.
+    walk_away: Any language implying a licence, exclusivity or obligation to deal.
+    detect:
+      any_of: ["no licence", "no license", "no obligation", "exclusiv"]
+    authority: Head of Legal
+
+  - id: remedies
+    topic: Injunctive relief
+    severity: low
+    ideal: Acknowledgement that damages may be inadequate and injunctive relief may be sought without proof of special damage.
+    acceptable: Acknowledgement that equitable relief may be sought.
+    walk_away: Liquidated damages for breach set by the other side.
+    detect:
+      any_of: ["injunct", "equitable relief", "liquidated damages"]
+    authority: Head of Legal
+
+  - id: governing-law
+    topic: Governing law
+    severity: medium
+    ideal: Singapore law and Singapore courts.
+    acceptable: Singapore law with SIAC arbitration.
+    walk_away: Foreign law without advice.
+    detect:
+      any_of: ["governed by", "governing law", "jurisdiction", "arbitration"]
+    authority: Head of Legal

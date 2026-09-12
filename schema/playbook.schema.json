@@ -1,0 +1,236 @@
+{
+  "$defs": {
+    "Detect": {
+      "description": "How to find the clause(s) a position is about. Case-insensitive substring match on\n`any_of`; every term in `all_of` must be present; `regex` is a raw pattern.",
+      "properties": {
+        "any_of": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Any Of",
+          "type": "array"
+        },
+        "all_of": {
+          "items": {
+            "type": "string"
+          },
+          "title": "All Of",
+          "type": "array"
+        },
+        "regex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Regex"
+        },
+        "headings": {
+          "description": "clause headings to match",
+          "items": {
+            "type": "string"
+          },
+          "title": "Headings",
+          "type": "array"
+        }
+      },
+      "title": "Detect",
+      "type": "object"
+    },
+    "Position": {
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity",
+          "default": "medium"
+        },
+        "ideal": {
+          "description": "what we open with / would love to get",
+          "title": "Ideal",
+          "type": "string"
+        },
+        "acceptable": {
+          "description": "what we can sign without escalation",
+          "title": "Acceptable",
+          "type": "string"
+        },
+        "walk_away": {
+          "description": "what we cannot sign; escalate or decline",
+          "title": "Walk Away",
+          "type": "string"
+        },
+        "detect": {
+          "$ref": "#/$defs/Detect"
+        },
+        "fallback_language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "pre-approved clause text to propose when below acceptable",
+          "title": "Fallback Language"
+        },
+        "authority": {
+          "default": "Legal",
+          "description": "who can approve signing below `acceptable`",
+          "title": "Authority",
+          "type": "string"
+        },
+        "rationale": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "why we care; for the memo",
+          "title": "Rationale"
+        },
+        "jurisdiction_notes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "e.g. {'SG': 'UCTA s 11 reasonableness...'}",
+          "title": "Jurisdiction Notes",
+          "type": "object"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "topic",
+        "ideal",
+        "acceptable",
+        "walk_away",
+        "detect"
+      ],
+      "title": "Position",
+      "type": "object"
+    },
+    "Severity": {
+      "enum": [
+        "deal_breaker",
+        "high",
+        "medium",
+        "low"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "Side": {
+      "enum": [
+        "vendor",
+        "customer",
+        "mutual",
+        "licensor",
+        "licensee",
+        "employer",
+        "other"
+      ],
+      "title": "Side",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "version": {
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "side": {
+      "$ref": "#/$defs/Side"
+    },
+    "contract_type": {
+      "title": "Contract Type",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "default": "SG",
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "owner": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Owner"
+    },
+    "updated": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "ISO date (YAML parses it natively)",
+      "title": "Updated"
+    },
+    "summary": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Summary"
+    },
+    "positions": {
+      "items": {
+        "$ref": "#/$defs/Position"
+      },
+      "title": "Positions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "side",
+    "contract_type",
+    "positions"
+  ],
+  "title": "Playbook",
+  "type": "object"
+}
